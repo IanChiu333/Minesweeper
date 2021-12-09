@@ -73,5 +73,3 @@ void placeBombs(int r, int c) {
     }
   }
 }
-
-//Loop through whole grid and places bomb as long as it is not next to the firstclick.

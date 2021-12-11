@@ -47,10 +47,8 @@ void draw() {
 
 void mouseClicked() {
   if (firstClick == false) {
-    int col = floor(mouseX / 40);
-    int row = floor(mouseY / 40);
-    println(col);
-    println(row);
+    int row = floor(mouseX / 40);
+    int col = floor(mouseY / 40);
     placeBombs(row, col);
     firstClick = true;
     timeStart = millis();
@@ -66,8 +64,6 @@ void placeBombs(int r, int c) {
   for (int row = 0; row < grid.length; row++) {
     for (int col = 0; col < grid[row].length; col++) {
       if (row >= r-1 && row <= r+1 && col >= c-1 && col <= c+1) {
-        println(row);
-        println(col);
         grid[row][col].bomb = false;
       } else {
         int x = (int)(random(0, 5));

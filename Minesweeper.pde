@@ -4,10 +4,12 @@ boolean cL = false;
 boolean cR = false;
 boolean gameOver = false;
 boolean firstClick = false;
+int seconds = 0;
+int timeStart = 0;
 
 void setup() {
   flagImage = loadImage("flag.png");
-  size(800, 800);
+  size(840, 800);
   for (int row = 0; row < grid.length; row++) {
     for (int col = 0; col < grid[row].length; col++) {
       Cell c = new Cell(row*40, col*40, row, col);
@@ -23,10 +25,17 @@ void setup() {
 
 void draw() {
   if (firstClick == true) {
+    background(0);
+    seconds = (millis() - timeStart)/1000;
+    fill(255);
+    text(seconds, 800, 40);
     for (int row = 0; row < grid.length; row++) {
       for (int col = 0; col < grid[row].length; col++) {
         grid[row][col].update();
       }
+    }
+    if (win() == true) {
+      background(0,255,0);
     }
   }
   if (gameOver == true) {
@@ -44,6 +53,7 @@ void mouseClicked() {
     println(row);
     placeBombs(row, col);
     firstClick = true;
+    timeStart = millis();
   }
   if (mouseButton == LEFT) {
     cL = true;
@@ -71,5 +81,21 @@ void placeBombs(int r, int c) {
     for (int col = 0; col < grid[row].length; col++) {
       grid[row][col].countBombs();
     }
+  }
+}
+
+boolean win() {
+  int counter = 0;
+  for (int row=0; row < grid.length; row++) {
+    for (int col=0; col < grid[row].length; col++) {
+      if (grid[row][col].bomb == false && grid[row][col].reveal == false) {
+        counter++;
+      }
+    }
+  }
+  if (counter == 0) {
+    return(true);
+  } else {
+    return(false);
   }
 }
